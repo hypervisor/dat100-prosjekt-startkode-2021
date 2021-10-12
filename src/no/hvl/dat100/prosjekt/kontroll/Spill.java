@@ -131,14 +131,14 @@ public class Spill {
 	 * Gir neste handling for en spiller (spilt et kort, trekker et kort, forbi)
 	 * 
 	 * @param spiller
-	 *            spiller som handle.
+	 *            spiller som skal handle.
 	 * 
-	 * @return handlingen som blir utført.
+	 * @return handlingen som skal utføres av kontroll delen.
 	 */
 	public Handling nesteHandling(ISpiller spiller) {
 		
 		// TODO - START
-		
+		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
 		throw new UnsupportedOperationException(TODO.method());
 
 		// TODO - END
