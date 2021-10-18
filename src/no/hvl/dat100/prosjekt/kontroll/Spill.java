@@ -27,12 +27,9 @@ public class Spill {
 	public final static int ANTALL_KORT_START = Regler.ANTALL_KORT_START;
 	
 	public Spill() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.constructor("Spill"));
-		// TODO - END
-		
+		bord = new Bord();
+		nord = new NordSpiller(Spillere.NORD);
+		syd = new SydSpiller(Spillere.SYD);
 	}
 	
 	/**
@@ -41,13 +38,7 @@ public class Spill {
 	 * @return referanse/peker bord objekt.
 	 */
 	public Bord getBord() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-		
+		return bord;
 	}
 	
 	/**
@@ -56,12 +47,7 @@ public class Spill {
 	 * @return referanse/peker til syd spiller.
 	 */
 	public ISpiller getSyd() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		return syd;
 		
 	}
 
@@ -71,12 +57,7 @@ public class Spill {
 	 * @return referanse/peker til nord.
 	 */
 	public ISpiller getNord() {
-		
-		// TODO - START
-
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		return nord;
 	}
 
 	/**
@@ -89,11 +70,10 @@ public class Spill {
 	 * av en klasse laget av gruppen (implementeres i oppgave 3).
 	 */
 	public void start() {
+		KortUtils.stokk(bord.getBunkeFra());
+		delutKort();
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		bord.vendOversteFraBunke();
 	}
 
 	/**
@@ -101,11 +81,10 @@ public class Spill {
 	 * 
 	 */
 	private void delutKort() {
-
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		for (int i = 0; i < ANTALL_KORT_START; ++i) {
+			nord.leggTilKort(bord.taOversteFraBunke());
+			syd.leggTilKort(bord.taOversteFraBunke());
+		}
 	}
 
 	/**
@@ -119,12 +98,15 @@ public class Spill {
 	 * @return kortet som trekkes.
 	 */
 	public Kort trekkFraBunke(ISpiller spiller) {
-
-		// TODO - START
-			
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		var kort = bord.taOversteFraBunke();
+		
+		if (bord.bunkefraTom()) {
+			bord.snuTilBunken();
+		}
+		
+		spiller.trekker(kort);
+		
+		return kort;
 	}
 
 	/**
@@ -136,13 +118,8 @@ public class Spill {
 	 * @return handlingen som skal utføres av kontroll delen.
 	 */
 	public Handling nesteHandling(ISpiller spiller) {
-		
-		// TODO - START
-		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-		
+		var overste = bord.seOversteBunkeTil();
+		return spiller.nesteHandling(overste);
 	}
 
 	/**
@@ -161,6 +138,7 @@ public class Spill {
 		
 		// TODO - START
 		
+		//bord.leggNedBunkeTil(kort);
 		throw new UnsupportedOperationException(TODO.method());
 
 		// TODO - END
