@@ -18,7 +18,11 @@ public class KortUtils {
 	 */
 	
 	public static void sorter(KortSamling samling) {
-		
+		// Kopier tabellen uten null elementene fordi compareTo sjekker ikke for null.
+        Kort[] kort = Arrays.copyOf(samling.getSamling(), samling.getAntalKort());
+        Arrays.sort(kort);
+        // Kopier tilbake
+        System.arraycopy(kort, 0, samling.getSamling(), 0, samling.getAntalKort());
 	}
 	
 	/**

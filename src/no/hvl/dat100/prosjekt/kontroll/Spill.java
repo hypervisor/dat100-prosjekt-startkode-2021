@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import no.hvl.dat100.prosjekt.modell.KortSamling;
 import no.hvl.dat100.prosjekt.TODO;
 import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
-import no.hvl.dat100.prosjekt.kontroll.spill.Handling;
-import no.hvl.dat100.prosjekt.kontroll.spill.Spillere;
+import no.hvl.dat100.prosjekt.kontroll.spill.*;
 import no.hvl.dat100.prosjekt.modell.Kort;
 import no.hvl.dat100.prosjekt.modell.KortUtils;
 
@@ -135,13 +134,15 @@ public class Spill {
 	 * @return true dersom spilleren har kortet, false ellers.
 	 */
 	public boolean leggnedKort(ISpiller spiller, Kort kort) {
+		KortSamling hand = spiller.getHand();
+		if (!hand.har(kort))
+			return false;
 		
-		// TODO - START
+		spiller.fjernKort(kort);
+		bord.leggNedBunkeTil(kort);
+		spiller.setAntallTrekk(0);
 		
-		//bord.leggNedBunkeTil(kort);
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		return true;
 	}
 
 	/**
@@ -152,12 +153,7 @@ public class Spill {
 	 *            spilleren som er i tur.
 	 */
 	public void forbiSpiller(ISpiller spiller) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-	
-		// TODO - END
+		spiller.setAntallTrekk(0);
 	}
 
 	/**
@@ -174,15 +170,23 @@ public class Spill {
 	public Kort utforHandling(ISpiller spiller, Handling handling) {
 
 		// TODO - START
-		Kort kort = null;
-
-		// Hint: del opp i de tre mulige handlinger og vurder 
-		// om noen andre private metoder i klassen kan brukes
-		// til å implementere denne metoden
-				
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		switch (handling.getType())
+		{
+		case FORBI:
+			forbiSpiller(spiller);
+			return null;
+		case TREKK:
+			Kort trukket = bord.taOversteFraBunke();
+			spiller.trekker(trukket);
+			return trukket;
+		case LEGGNED:
+			if (!leggnedKort(spiller, handling.getKort()))
+				return null;
+			
+			return handling.getKort();
+		}
+		
+		return null;
 	}
 
 }
